@@ -1,0 +1,13 @@
+<svg fill="#000000" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg" filter="url(#f1)">
+    <defs>
+        <filter id="f1" x="0" y="0" width="200%" height="200%">
+            <feOffset result="offOut" in="SourceAlpha" dx="2" dy="2" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="2" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+    </defs>
+    
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="#B2EF75"  />
+    <path d="M5 20L19 20Z" stroke="#B2EF75" stroke-width="2" fill="#B2EF75" />
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>

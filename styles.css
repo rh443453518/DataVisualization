@@ -1,0 +1,570 @@
+body {
+    margin: 0px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a {
+    color: deepskyblue;
+}
+
+a:hover {
+    color: #AABFFF;
+}
+
+.row-0 {
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 0px;
+    padding-top: 5px;
+    font-family: "Open Sans", Serif;
+
+}
+
+.row-0-title {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.row-0-legend {
+    display: inline-block;
+    padding-bottom: 7px;
+
+}
+
+.row-0-img {
+    display: inline-block;
+    width: 10%;
+    height: 10%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.row-0-img img {
+    width:50%;
+    height: 50%;
+}
+
+.row-0-content {
+    display: inline-block; 
+    width: 89%;
+    vertical-align: middle;
+}
+
+.row-1{
+    height: 700px;
+    background-color: #221b63;
+    z-index: 3;
+    background: linear-gradient(#2b1c6d, #8800ae);
+    border-bottom-left-radius: 200px;
+    border-bottom-right-radius: 200px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+.row-2{
+    height: 450px;
+    background-color: #221b63;
+    border-top-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+
+}
+
+.row-2-title{
+    padding-top: 240px;
+    color: white;
+    width: 80%;
+    margin: auto;
+    font-family: 'Open Sans', serif;
+    font-size: 20px;
+}
+
+
+.row-2-content{
+    padding-top: 20px;
+    color: white;
+    width: 80%;
+    margin: auto;
+    font-size: 14px;
+}
+
+.row-4-title2{
+    padding-top: 230px;
+    color: white;
+font-size: 20px;
+    width: 80%;
+    margin: auto;
+}
+
+
+.row-4-content2{
+    padding-top: 20px;
+    color: white;
+    font-size: 14px;
+    width: 80%;
+    margin: auto;
+}
+
+.row-3{
+    height: 200px;
+    background-color: white;
+}
+
+.row-3-left{
+    height: 400px;
+    width: 40%;
+    position: absolute;
+    left: 0;
+    background-color: #221b63;
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+.row-3-right{
+    height: 400px;
+    width: 40%;
+    position: absolute;
+    right: 0;
+    background-color: #931bae;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+.row-4{
+    height: 140px;
+    background-color: white;
+}
+
+.row-4-blank-content{
+    height: 0px;
+    background-color: white;
+}
+
+.row-4-content{
+    height: 550px;
+    background-color: white;
+    /*border-radius: 100px;*/
+    /*border-bottom-right-radius: 0px;*/
+    background: linear-gradient(90deg, #221b63, #931bae);
+}
+
+.row-5{
+    height: 820px;
+    background-color: #241c7a;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    font-family: "Open Sans", Serif;
+}
+
+.row-6{
+    height: 100px;
+    background-color: white;
+}
+
+
+.row-7{
+    height: 600px;
+    background-color: #241c7a;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+}
+
+.row-8{
+    height: 200px;
+    background-color: white;
+}
+
+
+.row-9{
+    height: 620px;
+    background-color: #241c7a;
+    background: linear-gradient(90deg, #221b63, #931bae);
+    border-top-left-radius: 100px;
+}
+
+.row-9-left{
+    position: absolute;
+    height: 620px;
+    /*background-color: #241c7a;*/
+
+    border-color: white;
+    width: 60%;
+    left: 0;
+
+}
+
+.row-9-right{
+    position: absolute;
+    height: 620px;
+    /*background-color: #931bae;*/
+    width: 40%;
+    /*border: dashed 1px;*/
+    /*padding: 10px;
+    /*border-style: solid solid solid dashed;*/
+    border-left: dashed white;
+    padding-right: 30px;
+    right: 0;
+    font-family: "Open Sans", Serif;
+}
+
+.row-9-right-title{
+    margin-top: 50px;
+    margin-left: 30px;
+    font-size: 20px;
+    color: white;
+}
+
+
+.row-9-right-legend{
+    margin-top: 10px;
+    margin-left: 30px;
+    color: white;
+    font-size: 14px;
+    width: 100%;
+}
+
+.row-9-right-img {
+    display: inline-block;
+    width: 10%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.row-9-right-content{
+    display: inline-block;
+    color: white;
+    margin: 3px 5px 0px 3px;
+
+    width: 80%;
+    vertical-align: middle;
+}
+
+.row-10{
+    height: 100px;
+    background-color: white;
+}
+
+.row-11{
+    height: 200px;
+    background-color: #931bae;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    background: linear-gradient(-90deg, #221b63, #931bae);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+div.polaroid {
+    width: 80%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    background-color: #7b53fc;
+    z-index: 0;
+    position: absolute;
+    top: 610px;
+    left:10%;
+    border-radius: 10px;
+}
+
+div.polaroid-2-left {
+    width: 35%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    background-color: #5C50FC;
+    z-index: 20;
+    position: absolute;
+    top: 1510px;
+    left:10%;
+    border-radius: 10px;
+}
+
+div.polaroid-2-right {
+    width: 35%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    background-color: #e95efc;
+    z-index: 20;
+    position: absolute;
+    top: 1510px;
+    right:10%;
+    border-radius: 10px;
+}
+
+div.polaroid-3 {
+    width: 80%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    background-color: #7b53fc;
+    z-index: 20;
+    position: absolute;
+    top: 2280px;
+    left:10%;
+    border-radius: 10px;
+}
+
+
+div.polaroid-4 {
+    padding-top: 30px;
+    width: 95%;
+    height: 615px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    background-color: #7b53fc;
+    z-index: 20;
+    position: absolute;
+    top: 3350px;
+    left:5%;
+    border-radius: 10px;
+}
+
+.header{
+    color: white;
+    width: 80%;
+    height: 5%;
+    padding-top:30px;
+    margin: auto;
+    font-family: 'Open Sans', serif;
+    font-size: 30px;
+}
+
+.img-circle {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 2px solid;
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.4), 0 8px 25px 0 rgba(0, 0, 0, 0.23);
+}
+
+.img-circle-1 {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    background-color: #5c50fc;
+    margin-right: 100px;
+}
+.img-circle-2 {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    background-color: #ea5dfc;
+    margin-right: 70px;
+}
+.img-circle-3 {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    background-color: #fc5e74;
+    margin-right: 50px;
+}
+.img-circle-4 {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    background-color: #fca43d;
+    margin-right: 30px;
+}
+.img-circle-5 {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    background-color: #b3e835;
+    margin-right: 50px;
+}
+
+.race-row {
+    /*position: relative;*/
+    /*top: 430px;*/
+    padding-top: 460px;
+
+}
+
+.race-content {
+    /*position: absolute;*/
+    /*top: 2670px;*/
+    /*left:150px;*/
+    padding-top: 150px;
+    color: white;
+    width: 80%;
+    margin: auto;
+    font-size: 14px;
+}
+
+
+
+.race-row-img{
+    padding-top: 80px;
+    width: 80%;
+    float: left;
+    padding-left: 150px;
+    color: white;
+    font-size: 20px;
+
+}
+
+.race-row-title{
+    color: white;
+    font-size: 20px;
+}
+
+
+.header-content-first{
+    width: 80%;
+    margin: auto;
+    padding-top: 30px;
+}
+
+.header-content{
+    color: white;
+    width: 60%;
+    float: left;
+    margin-right: 10%;
+    font-family: 'Open Sans', serif;
+    font-size: 14px;
+}
+
+.student-list{
+    color: white;
+    width: 30%;
+    float: left;
+    font: 12px sans-serif;
+}
+
+.student-list-img{
+    width: 20%;
+    float: left;
+}
+.student-list-name{
+    width: 80%;
+    float: left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.student-row{
+    width: 100%;
+    height: 60px;
+}
+
+.axisWhite line{
+    stroke: white;
+}
+
+
+.axisWhite path{
+    stroke: white;
+}
+
+.axisWhite text {
+    fill: white;
+    font: 12px sans-serif;
+}
+
+.tick line{
+    /*visibility:hidden;*/
+    opacity: 0.5;
+}
+
+#mars{
+    width: 70px;
+    height: 70px;
+    margin-top:150px;
+    margin-left: 20px;
+}
+
+#femenine{
+    width: 70px;
+    height: 70px;
+    margin-top:150px;
+    position: absolute; /*or fixed*/
+    right: 20px;
+}
+
+.rotate45 {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+svg.geo {
+    border: solid #ffffff 0px; 
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+div.geo {
+    /*border: solid #ffffff 0px;*/
+    color: white;
+    /*width: 350px; */
+    /*height: 270px; */
+
+    /*padding: 10px;*/
+    background-color: rgba(0, 0, 0, 0.1);
+    /*margin-left: 50px;*/
+    text-align: left;
+
+    width: 30%;
+    height:270px;
+    margin: auto;
+    float: left;
+    font-family: "Open Sans", Serif;
+    font-size: 14px;
+}
+
+.geo-svg{
+    width: 30%;
+    height:270px;
+    /*margin: auto;*/
+    float: left;
+    padding-left: 30px;
+}
+
+.geo-row{
+    height: 270px;
+    padding-left: 50px;
+    margin-right: 15px;
+}
+
+.geo-row-2{
+    padding-top: 30px;
+}
+
+.geo-text{
+    font-family: "Open Sans", Serif;
+    font-size: 13px;
+}
+
+path.state { 
+    fill: #ffffff; 
+    stroke: #ffffff;
+    stroke-width: 1px; 
+    stroke-opacity: 0.5;
+}
+
+#geographicalMobilityPlot{
+    padding-top: 25px;
+}
+
+.row-11-title{
+    padding-left: 20px;
+    padding-top: 40px;
+    font-size: 20px;
+    font-family: "Open Sans", Serif;
+    color: white;
+}
+
+.row-11-content{
+    width: 95%;
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size: 14px;
+    font-family: "Open Sans", Serif;
+    color: white;
+}
+
