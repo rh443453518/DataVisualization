@@ -1,0 +1,1197 @@
+<!--
+US college rank - project - 2 -combine
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>	
+		</title>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="http://d3js.org/topojson.v2.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+		<style>
+
+				.Description {
+					position: relative;
+				    width:100%;
+				    height: 140px;
+				    background-color: black;
+				    padding: 20px;
+				    font-weight: 300;
+				    color: white;
+				    text-align: center;
+				    font-size: 16px;
+				}
+
+
+				.centered_text {
+					width:100%;
+					text-align: center;
+    				font-size: 18px;
+				}
+
+				.graph {
+					text-align: center;
+				}
+
+				h1 {
+					text-align: center;
+					font-family: 'Open Sans', sans-serif;
+					font-size: 40px; 
+				}
+				h3{
+					text-align: center;
+					font-family: 'Alegreya Sans', Calibri, sans-serif;
+					font-size: 13px; 
+				}
+				body { 
+					font-family: 'Alegreya Sans', Calibri, sans-serif;
+				}
+
+				svg { border: solid #eee 1px; }
+				.background {
+				  fill: none;
+				  pointer-events: all;
+				}
+				path.state { fill: #ddd; stroke: #fff; stroke-width: 1.5px; cursor: pointer;}
+				path.out { stroke: none; opacity: 0.25; }
+				path:hover {
+					fill-opacity: .7;
+				}
+
+				path.state.active {
+				  fill: #97D5F4;
+				}
+
+				.SATaxis line{
+					stroke: none;
+				}
+				.SATaxis path{
+					stroke: none;
+				}
+
+				.SATaxis text{
+					fill: orange;
+				}
+
+				.SATaxis line{
+					stroke: none;
+				}
+				.SATaxis path{
+					stroke: none;
+				}
+
+				.admissionAxis line{
+					stroke: none;
+				}
+				.admissionAxis path{
+					stroke: none;
+				}
+
+				.admissionAxis text{
+					fill: blue;
+				}
+
+				.admissionAxis line{
+					stroke: none;
+				}
+				.admissionAxis path{
+					stroke: none;
+				}
+				/* for tuition and salary map* - start*/
+				#minSalary{
+					color: #87b4d1;
+				}
+				/*citation: tooltip http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 */
+
+				div.tooltip {   
+				    position: absolute;           
+				    text-align: center;           
+				    width: 120px;                  
+				    height: 40px;                 
+				    padding: 2px;             
+				    font: 12px sans-serif;        
+				    background: white;   
+				    border: 0px;      
+				    border-radius: 8px;           
+				    pointer-events: none;         
+				}
+				#minSalarySlider
+				{
+				    width: 800px;
+				    text-align: center;
+				    margin-left: 0px;
+				}
+
+				/*Citation: slider CSS generated from: http://www.cssportal.com/style-input-range/*/
+				input[type=range] {
+				  -webkit-appearance: none;
+				  margin: 10px 0;
+				  width: 100%;
+				}
+				input[type=range]:focus {
+				  outline: none;
+				}
+				input[type=range]::-webkit-slider-runnable-track {
+				  width: 100%;
+				  height: 7px;
+				  cursor: pointer;
+				  animate: 0.2s;
+				  box-shadow: 1px 1px 1px #ADADAD;
+				  background: #9cbfd6;
+				  border-radius: 9px;
+				  border: 0px solid #010101;
+				}
+				input[type=range]::-webkit-slider-thumb {
+				  box-shadow: 1px 1px 1px #79929C;
+				  border: 1px solid #6BABC2;
+				  height: 25px;
+				  width: 37px;
+				  border-radius: 9px;
+				  background: #FFFFFF;
+				  cursor: pointer;
+				  -webkit-appearance: none;
+				  margin-top: -9.5px;
+				}
+				input[type=range]:focus::-webkit-slider-runnable-track {
+				  background: #A7C2D4;
+				}
+				input[type=range]::-moz-range-track {
+				  width: 100%;
+				  height: 7px;
+				  cursor: pointer;
+				  animate: 0.2s;
+				  box-shadow: 1px 1px 1px #ADADAD;
+				  background: #A7C2D4;
+				  border-radius: 9px;
+				  border: 0px solid #010101;
+				}
+				input[type=range]::-moz-range-thumb {
+				  box-shadow: 1px 1px 1px #79929C;
+				  border: 1px solid #6BABC2;
+				  height: 25px;
+				  width: 37px;
+				  border-radius: 9px;
+				  background: #FFFFFF;
+				  cursor: pointer;
+				}
+				input[type=range]::-ms-track {
+				  width: 100%;
+				  height: 7px;
+				  cursor: pointer;
+				  animate: 0.2s;
+				  background: transparent;
+				  border-color: transparent;
+				  color: transparent;
+				}
+				input[type=range]::-ms-fill-lower {
+				  background: #A7C2D4;
+				  border: 0px solid #010101;
+				  border-radius: 18px;
+				  box-shadow: 1px 1px 1px #ADADAD;
+				}
+				input[type=range]::-ms-fill-upper {
+				  background: #A7C2D4;
+				  border: 0px solid #010101;
+				  border-radius: 18px;
+				  box-shadow: 1px 1px 1px #ADADAD;
+				}
+				input[type=range]::-ms-thumb {
+				  box-shadow: 1px 1px 1px #79929C;
+				  border: 1px solid #6BABC2;
+				  height: 25px;
+				  width: 37px;
+				  border-radius: 9px;
+				  background: #FFFFFF;
+				  cursor: pointer;
+				}
+				input[type=range]:focus::-ms-fill-lower {
+				  background: #A7C2D4;
+				}
+				input[type=range]:focus::-ms-fill-upper {
+				  background: #A7C2D4;
+				}
+				/* Citation: style code reference: https://www.w3schools.com/howto/howto_js_tabs.asp */
+				/* Style the tab */
+				div.tab {
+				    width: 800px;
+				    overflow: hidden;
+				    border: 1px solid #ccc;
+				    background-color: #f1f1f1;
+				}
+
+				/* Style the buttons inside the tab */
+				div.tab button {
+				    width: 266.6px;
+				    background-color: inherit;
+				    float: left;
+				    border: none;
+				    outline: none;
+				    cursor: pointer;
+				    padding: 14px 16px;
+				    transition: 0.3s;
+				}
+
+				/* Change background color of buttons on hover */
+				div.tab button:hover {
+				    background-color: #ddd;
+				}
+
+				/* Create an active/current tablink class */
+				div.tab button.active {
+				    background-color: #ccc;
+				}
+
+				/* Style the tab content */
+				.tabcontent {
+				    display: none;
+				    padding: 6px 12px;
+				    border: 1px solid #ccc;
+				    border-top: none;
+				}
+
+				#legend1 {
+					position: absolute;
+					margin-top: -525px;
+					margin-left: 810px;
+				}
+
+				/* for tuition and salary map* - end*/
+
+		</style>
+	</head>
+
+
+
+	<body>
+	
+
+		<div class="Description">
+		<h1>Getting In To A Top Ranked School </h1>
+		<p>Looking to attend a top ranked college or university? Look below to see what your SAT scores should be. </p>
+		<br><br>
+		</div>
+
+		<div class="centered_text">
+		<h2> Click on each state to learn more about the top schools in that state.</h2>
+		<h3> You can see information on average SAT score statistics, as well as admission rates in our scatterplot below. Getting into a top ranked school isn't easy, but scroll down to see how it will pay off. </h3>
+		</div>
+		<br>
+
+		<div class="graph">
+		<div style="white-space: nowrap;">
+			
+			<div style="width: 600px; display:inline-block; vertical-align: top; margin-left: 20px;">				
+				<div id = "mapOne" >
+				
+				</div>
+				
+			</div>
+			
+
+			<div style="width: 400px; display:inline-block;vertical-align: top; margin-left: 2px;">
+				<div id = "card">
+					
+				</div>
+				
+			</div>
+		
+		</div>
+
+		<div style="white-space: nowrap;">
+			<div style="width: 630px; display:inline-block; vertical-align: top; margin-left: -356px;">				
+				<div id = "mapTwo" >
+				
+				</div>
+				
+			</div>
+		
+		
+		</div>
+	</div>
+
+		<br>
+		<div class="Description">
+		<h1>Graduating From A Top Ranked School</h1>
+		<p>Hoping to graduate with a high paying job that will allow you to pay off your student debts? Find which schools provide you with the best opportunities for success.</p>
+		</div>
+
+		<div class="centered_text">
+		<h2> Hover on each circle to see how many students have achieved the minimum salary </h2>
+		<h3>Change the minimum annual salary expectation. Larger circles indicate a higher percentage of students will achieve the set salary. Bluer circle indicate how much can salary cover the tuition.</h3>
+		</div><br>
+
+		<div style="white-space: nowrap;">
+			
+			<div style="width: 800px; display:inline-block; vertical-align: top; margin-left: 200px;">				
+				<div id = "mapThree" >
+					
+					<div class="tab">
+						<button class="tablinks active" value="6" onclick="changeYrAfterEntry(event, this.value)">6 year after entry</button>
+						<button class="tablinks" value="8" onclick="changeYrAfterEntry(event, this.value)">8 year after entry</button>
+						<button class="tablinks" value="10" onclick="changeYrAfterEntry(event, this.value)">10 year after entry</button>
+					</div>
+
+					<br>
+					<input id="minSalarySlider" type="range" min="0" max="150000" value="70000" onchange="changeMinSalaryValue(this.value);"/>
+					<h3 style="font-size: 16px;">Minimum Salary: $ <span id="minSalary">70000</span> per year</h3>
+					
+					<!-- onchange="showHueValue(this.value); changeHslaValue();"-->
+					<div id="costsalary"></div>
+					<svg width="200" height="518" id = "legend1">
+						<text x="20" y="35" fill="black" font-family='sans-serif' style="font-weight: bold">Size scale</text>
+						<text x="35" y="55" fill="black" style="font-size: 13px">Percentage of students </text>
+						<text x="35" y="73" fill="black" style="font-size: 13px">reach minimum salary</text>
+						
+						<circle cx="45" cy="107" r="7.5" fill="#ccc"/>
+						<circle cx="45" cy="154" r="10.6" fill="#ccc"/>
+						<circle cx="45" cy="201" r="13" fill="#ccc"/>
+						<circle cx="45" cy="248" r="15" fill="#ccc"/>
+
+						<text x="70" y="112" fill="black" font-family='sans-serif'>25%</text>
+						<text x="70" y="159" fill="black" font-family='sans-serif'>50%</text>
+						<text x="70" y="206" fill="black" font-family='sans-serif'>75%</text>
+						<text x="70" y="253" fill="black" font-family='sans-serif'>100%</text>
+
+						<text x="20" y="300" fill="black" font-family='sans-serif' style="font-weight: bold">Color scale</text>
+						<text x="35" y="323" fill="black" style="font-size: 13px">Minimum annual salary / </text>
+						<text x="35" y="340" fill="black" style="font-size: 13px">Cost per academic year</text>
+						<circle cx="45" cy="372" r="15" fill="#F9581D" opacity="0.7"/>
+						<circle cx="45" cy="422" r="15" fill="#40e032" opacity="0.7"/>
+						<circle cx="45" cy="472" r="15" fill="#3254e0" opacity="0.7"/>
+
+						<text x="70" y="377" fill="black" font-family='sans-serif'>0%</text>
+						<text x="70" y="427" fill="black" font-family='sans-serif'>100%</text>
+						<text x="70" y="477" fill="black" font-family='sans-serif'>200% or more</text>
+					</svg>
+
+
+
+
+
+				</div>
+				
+			</div>
+		
+		
+		</div>
+
+
+		
+
+
+		<script>
+			/////////////////////////////////////////////////////////////////////
+			///////////////////////// Ranking Visualizations/////////////////////
+			/////////////////////////////////////////////////////////////////////
+
+			//// citation: use some codes from 2/22 notes ---------//
+			//// citation: code for zooming map: https://bl.ocks.org/mbostock/2206590 
+			var height = 270;
+			var width = 600;
+			var padding = 0;
+			var centered1;
+
+			var height2 = 270;
+			var width2 = 394;
+
+			var height3 = 270;
+			var width3 = 1000;
+
+
+			var svg = d3.select("#mapOne").append("svg")
+			.attr("height", height + 2 * padding).attr("width", width + 2 * padding);
+			
+			var svg2 = d3.select("#card").append("svg")
+			.attr("height", height2 + 2 * padding).attr("width", width2 + 2 * padding);
+
+			var svg3 = d3.select("#mapTwo").append("svg")
+			.attr("height", height3 + 2 * padding).attr("width", width3 + 2 * padding);
+
+			svg.append("rect")
+		    .attr("class", "background")
+		    .attr("width", width)
+		    .attr("height", height)
+		    .on("click", clicked1);
+
+		    var gg = svg.append("g");
+
+
+
+			//-----------------------A panel showing college information-----------------------
+			var xcord = 25;
+			var xOff = 100;
+			var ycord = 35;
+			var yOff = 40;
+			svg2.append("text")
+			.text("US")
+			.attr("id", "StateName")
+			.attr("x", 90)
+			.attr("y", 200)
+			.attr("transform", "rotate(-3)")
+			.style("opacity", "0.2")
+			.style("fill", "#97D5F4")
+			.style("font-weight", "bold")
+			.style("font-size", "150pt");
+
+			svg2.append("text")
+			.text("College Name: ")
+			.attr("x", xcord)
+			.attr("y", ycord)
+			.style("font-weight", "bold")
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("Rank: ")
+			.attr("x", xcord)
+			.attr("y", ycord + yOff)
+			.style("font-weight", "bold")
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("City: ")
+			.attr("x", xcord)
+			.attr("y", ycord + yOff*2)
+			.style("font-weight", "bold")
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("State: ")
+			.attr("x", xcord)
+			.attr("y", ycord + yOff*3)
+			.style("font-weight", "bold")
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("SAT Score: ")
+			.attr("x", xcord)
+			.attr("y", ycord + yOff*4)
+			.style("font-weight", "bold")
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("Admission Rate: ")
+			.attr("x", xcord)
+			.attr("y", ycord + yOff*5)
+			.style("font-weight", "bold")
+			.style("font-size", "10pt");
+			//-------------- actual text----------
+			svg2.append("text")
+			.text('')
+			.attr("id", "collegeName")
+			.attr("x", xcord + xOff)
+			.attr("y", ycord)
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text('')
+			.attr("id", "collegeRank")
+			.attr("x", xcord + xOff)
+			.attr("y", ycord + yOff)
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text('')
+			.attr("id", "collegeCity")
+			.attr("x", xcord + xOff)
+			.attr("y", ycord + yOff*2)
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text('')
+			.attr("id", "collegeState")
+			.attr("x", xcord+xOff)
+			.attr("y", ycord + yOff*3)
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("")
+			.attr("id", "collegeSAT")
+			.attr("x", xcord + xOff)
+			.attr("y", ycord + yOff*4)
+			.style("font-size", "10pt");
+
+			svg2.append("text")
+			.text("")
+			.attr("id", "collegeAdmission")
+			.attr("x", xcord+xOff)
+			.attr("y", ycord + yOff*5)
+			.style("font-size", "10pt");
+
+
+
+
+			//------------------------------ map ---------------------------
+			var projection1 = d3.geoAlbersUsa().scale(75);
+			var pathGenerator1 = d3.geoPath().projection(projection1);
+
+			var counties, states;
+
+			// function to handle any row-by-row processing on CSV
+			var parseRow = function(row) {
+				row.rank = Number(row.Ranking);
+				row.latitude = Number(row.LATITUDE)
+				row.longitude = Number(row.LONGITUDE)
+				row.admissionRate = Number(row.ADM_RATE)
+				row.SAT = Number(row.SAT_AVG_ALL)
+				row.id = Number(row.ID)
+				row.stateid = Number(row.st_fips);
+				return row;
+			}
+
+
+			//---------- load map data and rank data-------------//
+			var data=[];
+			var rankList = [];
+			var rExtended;
+			var rScale;
+			var rankColorScale;
+			var topNumer = 60;
+			var rankScaleForX;
+			var SATScale;
+			var admissionScale;
+			function loadData() {
+				d3.queue()
+				.defer(d3.json, "us.json")
+				.defer(d3.csv, "Rank100US.csv", parseRow)
+				.await(function (error, rawMap, rawRank) {
+										
+					//only get top 60
+					for (var i = 0; i < topNumer; i++) {
+						data.push(rawRank[i]);
+						rankList.push(rawRank[i].rank);
+					}
+
+		
+
+					//rank color scale for the circles on the map
+				    //rankColorScale = d3.scaleThreshold()
+				    //.domain([1,20,40,60,80,100])
+				    //.range(["#54278f","#756bb1","#9e9ac8","#bcbddc","#dadaeb","#f2f0f7"]);
+
+					states = topojson.feature(rawMap, rawMap.objects.states);
+				
+
+					showMap1();
+
+					//------------- a panel for showing SAT and admission rate------------//
+
+					//rank scale
+					rankScaleForX = d3.scaleLinear()
+					.domain([1,topNumer])
+					.range([50, width3-50]);
+
+					//SAT score scale
+					var SATExtent = d3.extent(data,
+					function (d) { return d.SAT; });
+
+					SATScale = d3.scaleLinear()
+					.domain(SATExtent)
+					.range([height3-50,0+50]);
+
+					console.log(SATScale(1400));
+
+					//admission score scale
+					var admissionExtent = d3.extent(data,
+					function (d) { return d.admissionRate; });
+
+					admissionScale = d3.scaleLinear()
+					.domain(admissionExtent)
+					.range([height3-50,0+50]);
+
+					
+					// --------- add SAT axix---------------
+					var showSATAxis = d3.axisLeft(SATScale);
+					svg3.append("g").attr("class","SATaxis").attr("transform", "translate(50, 0)").call(showSATAxis);
+
+					// --------- add admission axix---------------
+					var showAdmissionAxis = d3.axisRight(admissionScale);
+					svg3.append("g").attr("class","admissionAxis").attr("transform", "translate(960, 0)").call(showAdmissionAxis);
+
+					svg3.append("text")
+					.text("SAT Score")
+					.attr("x", 10)
+					.attr("y", 30)
+					.style("fill","orange")
+					.style("font-size", "10pt")
+					.style("font-weight", "bold");
+
+					svg3.append("text")
+					.text("Admission Rate")
+					.attr("x", width3-110)
+					.attr("y", 30)
+					.style("fill","blue")
+					.style("font-size", "10pt")
+					.style("font-weight", "bold");
+
+					//------ key for Rank ------------
+					svg3.append("text")
+					.text("Rank")
+					.attr("x", width3/2)
+					.attr("y", height3-5)
+					.style("fill","black")
+					.style("font-size", "10pt")
+					.style("font-weight", "bold");
+
+
+
+					//------ key for SAT score------------
+					svg3.append("rect")
+						.attr("x", width3/2-120)
+			            .attr("y", 10)
+			            .attr("stroke", "#d7dae2")
+			            .attr("width", 8)
+	              		.attr("height", 8)
+	              		.style("opacity", 0.7)
+	              		.style("fill", "orange")
+
+	              	svg3.append("text")
+						.text("SAT Score")
+						.attr("x", width3/2-100)
+						.attr("y", 20)
+						.style("fill","black")
+						.style("font-size", "10pt")
+						.style("font-weight", "bold");
+
+
+					//------ key for admission rate ------------
+					svg3.append("circle")
+						.attr("cx",width3/2)
+						.attr("cy",15)
+						.attr("r", 4)
+						.style("opacity", 0.7)
+						.attr("fill","blue");
+
+					svg3.append("text")
+						.text("Admission Rate")
+						.attr("x", width3/2+10)
+						.attr("y", 20)
+						.style("fill","black")
+						.style("font-size", "10pt")
+						.style("font-weight", "bold");
+
+
+					//------------- add rects for SAT scores------------------------
+					data.forEach(function(d) {
+						svg3.append("rect")
+						.attr("x", rankScaleForX(d.id))
+			            .attr("y", SATScale(d.SAT))
+			            .attr("stroke", "#d7dae2")
+			            .attr("width", 8)
+	              		.attr("height", 8)
+	              		.style("opacity", 0.7)
+	              		.style("fill", "orange")
+	              		.on("mouseover", function () {
+							svg2.select("#collegeName").text(d.Ranking_university_USnews_INSTNM);
+							svg2.select("#collegeRank").text(d.rank);
+							svg2.select("#collegeCity").text(d.CITY);
+							svg2.select("#collegeState").text(d.STABBR);
+							svg2.select("#collegeSAT").text(d.SAT);
+							svg2.select("#collegeAdmission").text(d.admissionRate);
+							d3.select(this).attr("width", 16);
+							d3.select(this).attr("height", 16);
+							
+						})
+						.on("mouseout", function(){
+							d3.select(this).attr("width", 8);
+							d3.select(this).attr("height", 8);
+					
+						});
+
+					});
+
+					//----------- add circles for admission rate--------------
+					data.forEach(function(d) {
+						svg3.append("circle")
+						.attr("cx",4+rankScaleForX(d.id))
+						.attr("cy",admissionScale(d.admissionRate))
+						.attr("r", 4)
+						.style("opacity", 0.7)
+						.attr("fill","blue")
+						.on("mouseover", function () {
+							svg2.select("#collegeName").text(d.Ranking_university_USnews_INSTNM);
+							svg2.select("#collegeRank").text(d.rank);
+							svg2.select("#collegeCity").text(d.CITY);
+							svg2.select("#collegeState").text(d.STABBR);
+							svg2.select("#collegeSAT").text(d.SAT);
+							svg2.select("#collegeAdmission").text(d.admissionRate);
+							d3.select(this).attr("r", 8);
+							
+						})
+						.on("mouseout", function(){
+							d3.select(this).attr("r", 4);
+						});
+
+					});
+
+				
+
+			
+
+
+					//-------  add xsix line ------------------------
+        			var count = 0;
+        			data.forEach(function(d) {
+						svg3.append("g")
+						.append("text")
+						.attr("class","ranknumbers")
+						.text(rankList[count])
+						.attr("x", rankScaleForX(d.id)-2.5)
+						.attr("y", height3-20)
+						.style("font-size", "10pt")
+						.attr("fill","black")
+						.on("mouseover", function () {
+							svg2.select("#collegeName").text(d.Ranking_university_USnews_INSTNM);
+							svg2.select("#collegeRank").text(d.rank);
+							svg2.select("#collegeCity").text(d.CITY);
+							svg2.select("#collegeState").text(d.STABBR);
+							svg2.select("#collegeSAT").text(d.SAT);
+							svg2.select("#collegeAdmission").text(d.admissionRate);
+							
+							d3.select(this).style("font-size", "17pt");
+							d3.select(this).attr("fill", "red");
+							d3.select(this).attr("x", rankScaleForX(d.id)-5);
+						})
+
+						.on("mouseout", function(){
+							d3.select(this).style("font-size", "10pt");
+							d3.select(this).attr("fill", "black");
+							d3.select(this).attr("x", rankScaleForX(d.id));
+							
+						});
+
+
+
+						count = count + 1;
+
+					});
+
+
+				
+				});
+
+			};
+
+		
+
+
+			loadData();
+			//-------- first: showing the map--------//
+			function showMap1() {
+			// Create or modify paths for each country
+			
+				projection1.fitExtent([[0,0], [svg.attr("width"), svg.attr("height")]], states);
+				pathGenerator1 = d3.geoPath().projection(projection1);
+				
+				var paths = gg.append("g").selectAll("path.state").data(states.features);
+				paths.enter().append("path").attr("class", "state")
+				.on("click", function (d) {
+					
+					//// citation: code for zooming map: https://bl.ocks.org/mbostock/2206590 
+					// code for zooming map
+					var x, y, k;
+
+					  if (d && centered1 !== d) {
+					    var centroid = pathGenerator1.centroid(d);
+					    x = centroid[0];
+					    y = centroid[1];
+					    k = 4;
+					    centered1 = d;
+					  } else {
+					    x = width / 2;
+					    y = height / 2;
+					    k = 1;
+					    centered1 = null;
+					  }
+
+					  gg.selectAll("path")
+					      .classed("active", centered1 && function(d) { return d === centered1; });
+
+					  gg.transition()
+					      .duration(750)
+					      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+					      .style("stroke-width", 1.5 / k + "px");
+
+
+					// check the state of different colleges
+					for (var i = 0; i < data.length; i++) {
+						if (d.id == data[i].stateid) {
+								var thisStateName = data[i].STABBR;
+							}
+					}
+					//console.log(data); 
+					svg2.select("#StateName").text(thisStateName);
+					//this.style.fill = '#B0DDF4';
+					d3.selectAll(".shades")
+					.transition().duration(1500)
+					.style("opacity", 0)
+					.transition().delay(1700)
+					.remove();
+					console.log(d.id); 
+					console.log(data);
+
+					// add shades if the colleges are not in the state clicked
+					for (var i = 0; i < data.length; i++) {
+
+						var tempArray = [];
+
+						if (d.id != data[i].stateid) {
+								svg3.append("rect")
+									.attr("class", "shades")
+									.attr("x", rankScaleForX(data[i].id)-4)
+						            .attr("y", -270)
+						            .attr("rx", 3)
+						            //.attr("stroke", "#d7dae2")
+						            .attr("width", 17)
+				              		.attr("height", height3 -70)
+				              		.style("opacity", 0.95)
+				              		.style("fill", "#eee")
+				              		.transition().delay(200+12*i).duration(200)
+									.attr("y", 35);
+
+
+						}
+
+					}
+					
+
+				})
+				
+
+
+				.merge(paths)
+				.transition().duration(1000)
+				.attr("d", function (state) {
+					return pathGenerator1(state);
+				});
+
+				// add circels and mouseover features
+				data.forEach(function (d) {
+					gg.append("circle")
+					.attr("cx",projection1([d.longitude,d.latitude])[0])
+					.attr("cy",projection1([d.longitude,d.latitude])[1])
+					.attr("r", 4)
+					.style("opacity", 0.8)
+					.attr("fill",'orange')//rankColorScale(d.rank)
+					.on("mouseover", function () {
+						svg2.select("#collegeName").text(d.Ranking_university_USnews_INSTNM);
+						svg2.select("#collegeRank").text(d.rank);
+						svg2.select("#collegeCity").text(d.CITY);
+						svg2.select("#collegeState").text(d.STABBR);
+						svg2.select("#collegeState").text(d.STABBR);
+						svg2.select("#collegeSAT").text(d.SAT);
+						svg2.select("#collegeAdmission").text(d.admissionRate);
+						d3.select(this).attr("r", 8);
+						
+					})
+					.on("mouseout", function(){
+						d3.select(this).attr("r", 4);
+						
+					});
+				});
+
+					
+			}
+
+
+			//// citation: code for zooming map: https://bl.ocks.org/mbostock/2206590 
+			function clicked1(d) {
+			  d3.selectAll(".shades")
+					.transition().duration(1500)
+					.style("opacity", 0)
+					.transition().delay(1700)
+					.remove();
+			  var x, y, k;
+
+			  if (d && centered1 !== d) {
+			    var centroid = pathGenerator1.centroid(d);
+			    x = centroid[0];
+			    y = centroid[1];
+			    k = 4;
+			    centered1 = d;
+			  } else {
+			    x = width / 2;
+			    y = height / 2;
+			    k = 1;
+			    centered1 = null;
+			  }
+
+			  gg.selectAll("path")
+			      .classed("active", centered1 && function(d) { return d === centered1; });
+
+			  gg.transition()
+			      .duration(750)
+			      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+			      .style("stroke-width", 1.5 / k + "px");
+			}
+
+
+
+		</script>
+
+
+
+
+
+		<script>
+			/////////////////////////////////////////////////////////////////////
+			///////////////////////// Tuition and Salary Map/////////////////////
+			/////////////////////////////////////////////////////////////////////
+			
+			//// citation: code for zooming map: https://bl.ocks.org/mbostock/2206590 
+			var width4 = 800;
+			var height4 = 380;
+
+			var svg_salary = d3.select("#costsalary").append("svg")
+			.attr("height",height4).attr("width",width4);
+			//var svg_graphic = d3.select("#costsalary").append("svg")
+			//.attr("height",600).attr("width",400);
+
+			var centered;
+			svg_salary.append("rect")
+			    .attr("class", "background")
+			    .attr("fill","#fff")
+			    .attr("width", width4)
+			    .attr("height", height4)
+			    .on("click", clicked);
+
+			var projection = d3.geoAlbersUsa().scale(1000).translate([width4/2, height4/2]);
+			var pathGenerator = d3.geoPath().projection(projection);
+
+			var gState = svg_salary.append("g");
+
+			//citation: tooltip http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
+
+			var div = d3.select("body")
+			    .append("div")   
+			    .attr("class", "tooltip")               
+			    .style("opacity", 0);
+
+			var rawData;
+			var states;
+			var processedData=[];
+
+			var minSalary;
+			var sequentialColors = ['#F9581D','#40e032','#3254e0'];
+			var costScale = d3.scaleLinear().domain([0,1,2]).range(sequentialColors);
+
+			var yrAfterEntry = '6';
+			var previousCircleData = Array.apply(null, Array(120)).map(Number.prototype.valueOf,0);
+
+			// function to handle any row-by-row processing on CSV
+			var parseRow = function(row) {
+			row.rank = Number(row.Ranking);
+			row.latitude = Number(row.LATITUDE)
+			row.longitude = Number(row.LONGITUDE)
+
+			row.yr10mean = Number(row.mn_earn_wne_p10)
+			row.yr10stdev = Number(row.sd_earn_wne_p10)
+			row.yr10per10 = Number(row.pct10_earn_wne_p10)
+			row.yr10per25 = Number(row.pct25_earn_wne_p10)
+			row.yr10per50 = Number(row.md_earn_wne_p10)
+			row.yr10per75 = Number(row.pct75_earn_wne_p10)
+			row.yr10per90 = Number(row.pct90_earn_wne_p10)
+
+			row.yr8mean = Number(row.mn_earn_wne_p8)
+			row.yr8stdev = Number(row.sd_earn_wne_p8)
+			row.yr8per10 = Number(row.pct10_earn_wne_p8)
+			row.yr8per25 = Number(row.pct25_earn_wne_p8)
+			row.yr8per50 = Number(row.md_earn_wne_p8)
+			row.yr8per75 = Number(row.pct75_earn_wne_p8)
+			row.yr8per90 = Number(row.pct90_earn_wne_p8)
+
+			row.yr6mean = Number(row.mn_earn_wne_p6)
+			row.yr6stdev = Number(row.sd_earn_wne_p6)
+			row.yr6per10 = Number(row.pct10_earn_wne_p6)
+			row.yr6per25 = Number(row.pct25_earn_wne_p6)
+			row.yr6per50 = Number(row.md_earn_wne_p6)
+			row.yr6per75 = Number(row.pct75_earn_wne_p6)
+			row.yr6per90 = Number(row.pct90_earn_wne_p6)
+
+			row.cost = Number(row.COSTT4_A)
+			return row;
+			}
+
+			function computecdf(predvalue, mean, stdev) {
+			    with (Math) {
+			        if (stdev==0) {
+			            if (predvalue<mean){
+			                Prob=0
+			            } else {
+			                Prob=1
+			            }
+			        } else {
+			            Prob=normalcdf((predvalue-mean)/stdev);
+			            Prob=round(100000*Prob)/100000;
+			        }
+			    }
+			    return Prob;
+			}
+
+			function normalcdf(X){   //HASTINGS.  MAX ERROR = .000001
+			    var T=1/(1+.2316419*Math.abs(X));
+			    var D=.3989423*Math.exp(-X*X/2);
+			    var Prob=D*T*(.3193815+T*(-.3565638+T*(1.781478+T*(-1.821256+T*1.330274))));
+			    if (X>0) {
+			        Prob=1-Prob
+			    }
+			    return Prob
+			}
+
+
+
+
+			d3.queue()
+			.defer(d3.json, "us.json")
+			.defer(d3.csv, "Rank100US.csv", parseRow)
+			.await(function (error, rawMap, rawData) {
+				states = topojson.feature(rawMap, rawMap.objects.states);
+				
+
+				//only get top 60
+				for (var i = 0; i < 60; i++) {
+					processedData.push(rawData[i]);
+				}
+
+			    
+
+			    showMap();
+			    previousCircleData = showMapCircle(previousCircleData, svg_salary);
+
+			});
+
+			function showMap() {
+
+				projection.fitExtent([[0,0], [svg_salary.attr("width"), svg_salary.attr("height")]], states);
+				pathGenerator = d3.geoPath().projection(projection);
+
+
+			    var paths = gState.append("g").selectAll("path.state").data(states.features);
+			    paths.enter().append("path").attr("class","state")
+			    .on("click", clicked)
+			    .merge(paths)
+			    .transition().duration(1000)
+			    .attr("d", function (state) {
+			        return pathGenerator(state);
+			    })
+			}
+
+			function showMapCircle(previousRadiusColorData, svg) {
+			    minSalary = document.getElementById("minSalarySlider").value;
+
+			    var counter = 0;
+			    var newpreviousRadiusData = Array.apply(null, Array(120)).map(Number.prototype.valueOf,0);
+
+			    processedData.forEach(function (d) {
+
+			        if (yrAfterEntry == '10') {
+			            var salaryProb = 1 - computecdf(minSalary, d.yr10mean, d.yr10stdev);
+			        }
+			        if (yrAfterEntry == '8') {
+			            var salaryProb = 1 - computecdf(minSalary, d.yr8mean, d.yr8stdev);
+			        }
+			        if (yrAfterEntry == '6') {
+			            var salaryProb = 1 - computecdf(minSalary, d.yr6mean, d.yr6stdev);
+			        }
+
+			        var prevR = previousRadiusColorData[counter];
+			        var prevC = previousRadiusColorData[counter+60];
+
+			        var oldColor = costScale(prevC);
+			        var potionColor = costScale(Math.min(2, (minSalary/d.cost)));
+
+
+			        gState.append("circle")
+			        .attr("class","circleForTuitionSalary")
+			        .attr("cx",projection([d.longitude,d.latitude])[0])
+			        .attr("cy",projection([d.longitude,d.latitude])[1])
+			        .attr("r", prevR)
+			        .attr("fill",oldColor)
+			        .style("opacity", 0.5)
+
+			        //citation: tooltip http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
+			        .on("mouseover", function () {
+			            //d3.select(this).attr("r", 12);
+			            div.transition()        
+			            .duration(200)      
+			            .style("opacity", .9);      
+			            div.text(d.AllUniversity2011_INSTNM + '\n' + parseInt(salaryProb*1000)/10 + '%' + '\n' )
+			                .style("left", (d3.event.pageX) + "px")     
+			                .style("top", (d3.event.pageY - 28) + "px");
+			        })
+			        .on("mouseout", function(){
+			            //d3.select(this).attr("r", 5);
+			            div.transition()        
+			            .duration(500)      
+			            .style("opacity", 0);  
+			        })
+			        .transition().duration(1000)
+			        .attr("fill",potionColor)
+			        .attr("r", Number(Math.sqrt(salaryProb) * 15));
+
+			        
+			        newpreviousRadiusData[counter] = Number(Math.sqrt(salaryProb) * 15);
+			        newpreviousRadiusData[counter+60] = Math.min(2, (minSalary/d.cost));
+			        counter += 1;
+			    });
+			    return newpreviousRadiusData;
+			}
+
+			function changeMinSalaryValue(newValue) {
+			    document.getElementById("minSalary").innerHTML = newValue;
+			    d3.selectAll('.circleForTuitionSalary').remove();
+			    previousCircleData = showMapCircle(previousCircleData, svg_salary);
+			}
+
+			//citation: code for tab https://www.w3schools.com/howto/howto_js_tabs.asp
+			function changeYrAfterEntry(evt, value) {
+			    tablinks = document.getElementsByClassName("tablinks");
+			    for (i = 0; i < tablinks.length; i++) {
+			        tablinks[i].className = tablinks[i].className.replace(" active", "");
+			    }
+			    yrAfterEntry = value;
+			    d3.selectAll('.circleForTuitionSalary').remove();
+			    previousCircleData = showMapCircle(previousCircleData, svg_salary);
+			    evt.currentTarget.className += " active";
+			}
+
+
+			//// citation: code for zooming map: https://bl.ocks.org/mbostock/2206590 
+
+			function clicked(d) {
+			  var x, y, k;
+
+			  if (d && centered !== d) {
+			    var centroid = pathGenerator.centroid(d);
+			    x = centroid[0];
+			    y = centroid[1];
+			    k = 4;
+			    centered = d;
+			  } else {
+			    x = width4 / 2;
+			    y = height4 / 2;
+			    k = 1;
+			    centered = null;
+			  }
+
+			  gState.selectAll("path")
+			      .classed("active", centered && function(d) { return d === centered; });
+
+			  gState.transition()
+			      .duration(750)
+			      .attr("transform", "translate(" + width4 / 2 + "," + height4 / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+			      .style("stroke-width", 1.5 / k + "px");
+			}
+
+
+
+		</script>
+
+
+
+				
+		
+		<br>
+	</body>
+</html>
